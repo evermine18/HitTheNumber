@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
         int number = 45;
         //Getting the button by ID
         Button button = (Button) findViewById(R.id.button);
+        //Getting userInput EditText
+        EditText userinput = (EditText) findViewById(R.id.inputNumber1);
         //Setting onclicklistener
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -25,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
                 int duration = Toast.LENGTH_SHORT;
                 int inputNumber = 0;
                 CharSequence text = "";
-                EditText userinput = (EditText) findViewById(R.id.inputNumber1);
                 // Getting user input
                 inputNumber = Integer.valueOf(userinput.getText().toString());
                 if (inputNumber == number){
