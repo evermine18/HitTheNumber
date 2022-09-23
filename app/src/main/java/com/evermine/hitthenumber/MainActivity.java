@@ -11,14 +11,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private int trys = 0;
+    private int tries = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         int number = 45;
-        //int trys = 0;
+        //Getting logs text view
         TextView logs = (TextView) findViewById(R.id.textView2);
         //Getting the button by ID
         Button button = (Button) findViewById(R.id.button);
@@ -36,16 +36,16 @@ public class MainActivity extends AppCompatActivity {
                 if (inputNumber == number){
                     logs.setText("");
                     text = "Good Job!! The number is "+number;
-                    trys=0;
+                    tries=0;
                 }
                 else if (inputNumber>number){
-                    trys++;
-                    logs.append("The number is bigger, Number: "+inputNumber+", Trys: "+trys+"\n");
+                    tries++;
+                    logs.append("The number is bigger, Number: "+inputNumber+", Trys: "+tries+"\n");
                     text = "Error :( The number is bigger";
                 }
                 else if (inputNumber<number){
-                    trys++;
-                    logs.append("The number is lower, Number: "+inputNumber+", Trys: "+trys+"\n");
+                    tries++;
+                    logs.append("The number is lower, Number: "+inputNumber+", Trys: "+tries+"\n");
                     text = "Error :( The number is lower";
                 }
 
