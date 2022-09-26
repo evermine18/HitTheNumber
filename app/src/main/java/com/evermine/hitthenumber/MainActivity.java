@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,17 +20,20 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     private int tries = 0;
     private int number = 0;
+    private TextView logs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        PlayGameDialog playagain = new PlayGameDialog().onCreateDialog();
+        //PlayGameDialog playagain = new PlayGameDialog().onCreateDialog();
         Random rand = new Random();
         // Obtain a number between 0 and 100
         number = rand.nextInt(101);
         //Getting logs text view
-        TextView logs = (TextView) findViewById(R.id.textView2);
+        logs = (TextView) findViewById(R.id.textView2);
+        logs.setMovementMethod(new ScrollingMovementMethod());
+
         //Getting the button by ID
         Button button = (Button) findViewById(R.id.button);
         //Getting userInput EditText
@@ -41,10 +45,11 @@ public class MainActivity extends AppCompatActivity {
                 int duration = Toast.LENGTH_SHORT;
                 int inputNumber = 0;
                 CharSequence text = "";
+                new PlayGameDialog();
                 // Getting user input
                 inputNumber = Integer.valueOf(userinput.getText().toString());
+
                 if (inputNumber == number){
-                    logs.setText("");
                     text = "Good Job!! The number is "+number;
                     showDialog();
                 }
@@ -65,15 +70,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void playAgain(){
-        Random rand = new Random();
-        tries=0;
-        number = rand.nextInt(101);
-    }
     public void showDialog(){
-        // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("You win!!! You wanna play again?")
+        builder.setMessage("You win with "+tries+" tries!!! You wanna play again?")
                 .setPositiveButton("Play again", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         playAgain();
@@ -84,6 +83,15 @@ public class MainActivity extends AppCompatActivity {
                         // User cancelled the dialog
                     }
                 });
+        // Create the AlertDialog object and return it
+        builder.create();
+        builder.show();
+    }
+    public void playAgain(){
+        Random rand = new Random();
+        tries=0;
+        number = rand.nextInt(101);
+        logs.setText("");
     }
     public class PlayGameDialog extends DialogFragment {
         @Override
@@ -97,6 +105,27 @@ public class MainActivity extends AppCompatActivity {
                         }
                     })
                     .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+                        }
+                    });
+            // Create the AlertDialog object and return it
+            return builder.create();
+        }
+    }
+
+    public class StartGameDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("test")
+                    .setPositiveButton("si", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // START THE GAME!
+                        }
+                    })
+                    .setNegativeButton("no", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // User cancelled the dialog
                         }
