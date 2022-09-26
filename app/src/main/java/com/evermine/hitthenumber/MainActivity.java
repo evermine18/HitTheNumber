@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -15,11 +16,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private int tries = 0;
     private int number = 0;
+    private String username = "";
+    private ArrayList<User> = new ArrayList<User>();
     private TextView logs;
 
     @Override
@@ -38,6 +42,16 @@ public class MainActivity extends AppCompatActivity {
         Button button = (Button) findViewById(R.id.button);
         //Getting userInput EditText
         EditText userinput = (EditText) findViewById(R.id.inputNumber1);
+        //Setting Records button clicks
+        Button records = (Button) findViewById(R.id.recordsButton);
+        records.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Records.class);
+                //intent.putExtra(tries);
+                startActivity(intent);
+            }
+        });
         //Setting onclicklistener
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -72,9 +86,12 @@ public class MainActivity extends AppCompatActivity {
     }
     public void showDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("You win with "+tries+" tries!!! You wanna play again?")
+        final EditText input = new EditText(this);
+        builder.setView(input);
+        builder.setMessage("You win with "+tries+" tries!!! You wanna play again?\nType your username:")
                 .setPositiveButton("Play again", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        input.getText();
                         playAgain();
                     }
                 })
