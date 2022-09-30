@@ -8,4 +8,9 @@ public class User {
         this.username = username;
         this.tries = tries;
     }
+
+    @Override
+    public String toString() {
+        return "User: "+this.username+" Tries: "+this.tries;
+    }
 }
