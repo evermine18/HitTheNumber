@@ -13,6 +13,6 @@ public class Records extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
         Bundle extras = getIntent().getExtras();
-        user = extras.getArray
+        user = extras.get();
     }
 }
