@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class Records extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class Records extends AppCompatActivity {
+    private ArrayList<User> user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_records);
-        getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
+        //user = extras.getArray
     }
 }

@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private int tries = 0;
     private int number = 0;
     private String username = "";
-    private ArrayList<User> = new ArrayList<User>();
+    private ArrayList<User> users = new ArrayList<User>();
     private TextView logs;
 
     @Override
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, Records.class);
-                //intent.putExtra(tries);
+                intent.putExtra("users",users);
                 startActivity(intent);
             }
         });
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (inputNumber == number){
                     text = "Good Job!! The number is "+number;
+                    users.add(new User(text.toString(),tries));
                     showDialog();
                 }
                 else if (inputNumber<number){
