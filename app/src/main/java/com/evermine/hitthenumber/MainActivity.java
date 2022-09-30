@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        users.add(new User("Pedro",10));
+        users.add(new User("Juan",2));
         //PlayGameDialog playagain = new PlayGameDialog().onCreateDialog();
         Random rand = new Random();
         // Obtain a number between 0 and 100
@@ -59,13 +61,11 @@ public class MainActivity extends AppCompatActivity {
                 int duration = Toast.LENGTH_SHORT;
                 int inputNumber = 0;
                 CharSequence text = "";
-                new PlayGameDialog();
                 // Getting user input
                 inputNumber = Integer.valueOf(userinput.getText().toString());
 
                 if (inputNumber == number){
                     text = "Good Job!! The number is "+number;
-                    users.add(new User(text.toString(),tries));
                     showDialog();
                 }
                 else if (inputNumber<number){
@@ -92,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setMessage("You win with "+tries+" tries!!! You wanna play again?\nType your username:")
                 .setPositiveButton("Play again", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        input.getText();
-                        playAgain();
+                        playAgain(String.valueOf(input.getText()));
                     }
                 })
                 .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
@@ -105,32 +104,14 @@ public class MainActivity extends AppCompatActivity {
         builder.create();
         builder.show();
     }
-    public void playAgain(){
+    public void playAgain(String text){
         Random rand = new Random();
+        users.add(new User(text,tries));
         tries=0;
         number = rand.nextInt(101);
         logs.setText("");
     }
-    public class PlayGameDialog extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the Builder class for convenient dialog construction
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("You win!!! You wanna play again?")
-                    .setPositiveButton("Play again", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            playAgain();
-                        }
-                    })
-                    .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User cancelled the dialog
-                        }
-                    });
-            // Create the AlertDialog object and return it
-            return builder.create();
-        }
-    }
+
 
     public class StartGameDialogFragment extends DialogFragment {
         @Override

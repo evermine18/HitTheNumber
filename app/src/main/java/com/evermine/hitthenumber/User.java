@@ -1,6 +1,9 @@
 package com.evermine.hitthenumber;
 
-public class User {
+import java.io.Serializable;
+import java.util.Comparator;
+
+public class User implements Serializable, Comparable<User> {
     private String username;
     private int tries;
 
@@ -9,8 +12,26 @@ public class User {
         this.tries = tries;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public int getTries() {
+        return tries;
+    }
+
     @Override
     public String toString() {
         return "User: "+this.username+" Tries: "+this.tries;
     }
+
+    public int compareTo(User e){
+        if(this.tries==e.tries)
+            return 0;
+        else if(this.tries>e.tries)
+            return 1;
+        else
+            return -1;
+    }
+
 }
