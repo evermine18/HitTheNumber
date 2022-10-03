@@ -27,8 +27,8 @@ public class Records extends AppCompatActivity {
             TextView txt3=new TextView(this);
             //setting the text
             txt1.setText(user.getUsername());
-            txt2.setText(String.valueOf(user.getTries()));
-            txt3.setText("si");
+            txt2.setText(Integer.toString(user.getTries()));
+            txt3.setText(Integer.toString(user.getTime()));
             txt1.setLayoutParams(params1);
             txt2.setLayoutParams(params1);
             txt3.setLayoutParams(params1);
