@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private int tries = 0;
@@ -25,13 +28,27 @@ public class MainActivity extends AppCompatActivity {
     private String username = "";
     private ArrayList<User> users = new ArrayList<User>();
     private TextView logs;
+    private Handler handler = new Handler();
+    private Runnable runnable;
+    private int secondsTimer = 0;
+    private TextView timerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        users.add(new User("PAblo",4));
-        users.add(new User("No soy Pablo",6));
+        timerView = (TextView) findViewById(R.id.textView5);
+        runnable = new Runnable() {
+            public void run() {
+                secondsTimer++;
+                timerView.setText(Integer.toString(secondsTimer));
+                //System.out.println("fifgouafuguosaf");
+                handler.postDelayed((Runnable) this, 1000);
+            }
+        };
+        runnable.run();
+        users.add(new User("PAblo",4,50));
+        users.add(new User("No soy Pablo",6,60));
         //PlayGameDialog playagain = new PlayGameDialog().onCreateDialog();
         Random rand = new Random();
         // Obtain a number between 0 and 100
@@ -83,8 +100,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     public void showDialog() {
+        try {
+            runnable.wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final EditText input = new EditText(this);
         builder.setView(input);
@@ -105,11 +126,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void playAgain(String username) {
-        users.add(new User(username, tries));
+        users.add(new User(username, tries,secondsTimer));
         Random rand = new Random();
         tries = 0;
+        secondsTimer = 0;
         number = rand.nextInt(101);
         logs.setText("");
+        runnable.notify();
     }
 }
 
