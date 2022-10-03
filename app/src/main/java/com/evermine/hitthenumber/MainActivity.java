@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<User> users = new ArrayList<User>();
     private TextView logs;
     private Handler handler = new Handler();
-    private Runnable runnable;
+    private Thread thread;
     private int secondsTimer = 0;
     private TextView timerView;
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         timerView = (TextView) findViewById(R.id.textView5);
-        runnable = new Runnable() {
+        Runnable runnable = new Runnable() {
             public void run() {
                 secondsTimer++;
                 timerView.setText(Integer.toString(secondsTimer));
@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed((Runnable) this, 1000);
             }
         };
-        runnable.run();
+        thread = new Thread(runnable);
+        thread.start();
         users.add(new User("PAblo",4,50));
         users.add(new User("No soy Pablo",6,60));
         //PlayGameDialog playagain = new PlayGameDialog().onCreateDialog();
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void showDialog() {
         try {
-            runnable.wait();
+            handler.wait();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         secondsTimer = 0;
         number = rand.nextInt(101);
         logs.setText("");
-        runnable.notify();
+        thread.start();
     }
 }
 
