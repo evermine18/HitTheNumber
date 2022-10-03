@@ -10,4 +10,12 @@ public class User implements Serializable {
         this.username = username;
         this.tries = tries;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public int getTries() {
+        return tries;
+    }
 }
